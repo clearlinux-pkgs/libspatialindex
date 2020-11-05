@@ -4,7 +4,7 @@
 #
 Name     : libspatialindex
 Version  : 1.8.5
-Release  : 2
+Release  : 3
 URL      : https://github.com/libspatialindex/libspatialindex/archive/1.8.5.tar.gz
 Source0  : https://github.com/libspatialindex/libspatialindex/archive/1.8.5.tar.gz
 Summary  : Generic C/C++ library for spatial indexing
@@ -24,6 +24,7 @@ Summary: dev components for the libspatialindex package.
 Group: Development
 Requires: libspatialindex-lib = %{version}-%{release}
 Provides: libspatialindex-devel = %{version}-%{release}
+Requires: libspatialindex = %{version}-%{release}
 
 %description dev
 dev components for the libspatialindex package.
@@ -48,28 +49,34 @@ license components for the libspatialindex package.
 
 %prep
 %setup -q -n libspatialindex-1.8.5
+cd %{_builddir}/libspatialindex-1.8.5
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
-export SOURCE_DATE_EPOCH=1545363615
+export LANG=C.UTF-8
+export SOURCE_DATE_EPOCH=1604610316
+export GCC_IGNORE_WERROR=1
+export CFLAGS="$CFLAGS -fno-lto "
+export FCFLAGS="$FFLAGS -fno-lto "
+export FFLAGS="$FFLAGS -fno-lto "
+export CXXFLAGS="$CXXFLAGS -fno-lto "
 %autogen --disable-static
 make  %{?_smp_mflags}
 
 %check
-export LANG=C
+export LANG=C.UTF-8
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-make VERBOSE=1 V=1 %{?_smp_mflags} check
+make %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1545363615
+export SOURCE_DATE_EPOCH=1604610316
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/libspatialindex
-cp COPYING %{buildroot}/usr/share/package-licenses/libspatialindex/COPYING
+cp %{_builddir}/libspatialindex-1.8.5/COPYING %{buildroot}/usr/share/package-licenses/libspatialindex/83cb62f2b17ba7c35533dceb4ed0d871e776e722
 %make_install
 
 %files
@@ -121,4 +128,4 @@ cp COPYING %{buildroot}/usr/share/package-licenses/libspatialindex/COPYING
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/libspatialindex/COPYING
+/usr/share/package-licenses/libspatialindex/83cb62f2b17ba7c35533dceb4ed0d871e776e722
