@@ -4,7 +4,7 @@
 #
 Name     : libspatialindex
 Version  : 1.9.3
-Release  : 4
+Release  : 5
 URL      : https://github.com/libspatialindex/libspatialindex/archive/1.9.3/libspatialindex-1.9.3.tar.gz
 Source0  : https://github.com/libspatialindex/libspatialindex/archive/1.9.3/libspatialindex-1.9.3.tar.gz
 Summary  : Generic C/C++ library for spatial indexing
